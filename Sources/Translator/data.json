@@ -1,0 +1,5 @@
+{
+                "hello": { "ru": "Привет", "en": "Hello" },
+                "day": { "ru": "День","en": "Day","pt": "Dia"},
+                "home": {  "ru": "Дом", "en": "Home"}
+}
