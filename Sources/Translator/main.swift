@@ -17,18 +17,18 @@ struct Translator: ParsableCommand {
     func run() throws {
         if let newK:String = k {
             if let newL:String = l {
-                Translate(k:newK,l:newL)
+                translate(k:newK,l:newL)
             }
             else {
-                Translate(k:newK)
+                translate(k:newK)
             }
         }
         else {
             if let newL:String = l {
-                Translate(l:newL)
+                translate(l:newL)
             }
             else {
-                Translate()
+                translate()
             }
         }
         if answer == false {
@@ -37,7 +37,7 @@ struct Translator: ParsableCommand {
     }
 }
 Translator.main()
-func Translate(k:String,l:String) {
+func translate(k:String,l:String) {
  for (word, dictionary) in words {
     if k == word {
         for (language, value) in dictionary {
@@ -49,7 +49,7 @@ func Translate(k:String,l:String) {
     } 
   }
 }
-func Translate(l:String) {
+func translate(l:String) {
     for (word, dictionary) in words {
         for (language, value) in dictionary {
             if l == language {
@@ -59,7 +59,7 @@ func Translate(l:String) {
    }
 }
 
-func Translate(k:String) {
+func translate(k:String) {
    for (word, dictionary) in words {
     if k == word {
         for (language, value) in dictionary {
@@ -69,7 +69,7 @@ func Translate(k:String) {
         }
    }
 }
-func Translate() {
+func translate() {
     for (word, dictionary) in words {
       print(word)
         for (language, value) in dictionary {
