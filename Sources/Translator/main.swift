@@ -2,7 +2,7 @@ import Foundation
 import ArgumentParser
  guard let path = Bundle.module.path( forResource: "data", ofType: "json")
  else {
-     print("Путь не найден((")
+     print("Путь не найден")
      exit(0)
  }
 guard let jsonData = FileManager.default.contents(atPath: path) else {
@@ -20,21 +20,21 @@ struct Translator: ParsableCommand {
     var l: String?
     @Argument(help: "To search for words" )
     var choice: String
-    @Argument(help: "The word you want to add or update in the dictionary" )
+    @Argument(help: "The word you want to add or update in the dictionary")
     var word: String?
     func run() throws {
-        if choice == "search"{
-            if let newK:String = k {
-              if let newL:String = l {
-                translate(k:newK,l:newL)
+        if choice == "search" {
+            if let newK: String = k {
+              if let newL: String = l {
+                translate(k: newK, l: newL)
               }
             else {
-                translate(k:newK)
+                translate(k: newK)
               }
             }
             else {
-            if let newL:String = l {
-                translate(l:newL)
+            if let newL: String = l {
+                translate(l: newL)
             }
             else {
                 translate()
@@ -45,42 +45,42 @@ struct Translator: ParsableCommand {
            }
         } 
        else if choice == "update" {
-           guard let newWord:String = word else {
+           guard let newWord: String = word else {
                print("Введите значение <word>")
                return
            }
-           guard let newK:String = k else {
+           guard let newK: String = k else {
                print("Введите значение -k")
                return
            }
-           guard let newL:String = l else {
+           guard let newL: String = l else {
                print("Введите значение -l")
                return
            }
-           update(newWord:newWord,l:newL,k:newK)
+           update(newWord: newWord,l: newL,k: newK)
         }
         else if choice == "delete" {
-            if let newK:String = k {
-              if let newL:String = l {
-                delete(k:newK,l:newL)
+            if let newK: String = k {
+              if let newL: String = l {
+                delete(k: newK, l: newL)
               }
               else {
-                  delete(k:newK)
+                  delete(k: newK)
               }
             }
             else {
-                if let newL:String = l {
-                    delete(l:newL)
+                if let newL: String = l {
+                    delete(l: newL)
                 } 
               }
         }
     } 
 }
 Translator.main()
-func update(newWord:String,l:String,k:String) {
+func update(newWord: String, l: String, k: String) {
     var dictionary = words[k] ?? [:]
     if dictionary.isEmpty {
-        words[k] = [l:newWord]
+        words[k] = [l : newWord]
     }
     else {
         dictionary[l] = newWord
@@ -95,9 +95,9 @@ func writingToFile() {
         print("Файл не найден")
         return
     }
-    try? encoderData?.write(to:url)
+    try? encoderData?.write(to: url)
 }
-func delete(k:String,l:String) {
+func delete(k: String, l: String) {
     var dictionary = words[k] ?? [:]
     if dictionary.isEmpty {
         return
@@ -108,11 +108,11 @@ func delete(k:String,l:String) {
     }
     writingToFile()
 }
-func delete(k:String) {
+func delete(k: String) {
     words[k] = nil
     writingToFile()
 }
-func delete(l:String) {
+func delete(l: String) {
     for (word, dictionary) in words {
         var dictionary = dictionary
       dictionary[l] = nil
@@ -120,7 +120,7 @@ func delete(l:String) {
     }
     writingToFile()
 }
-func translate(k:String,l:String) {
+func translate(k: String, l: String) {
     for (word, dictionary) in words {
         if k == word {
         for (language, value) in dictionary {
@@ -132,7 +132,7 @@ func translate(k:String,l:String) {
     }
   }  
 }
-func translate(l:String) {
+func translate(l: String) {
     for (word, dictionary) in words {
         for (language, value) in dictionary {
             if l == language {
@@ -142,7 +142,7 @@ func translate(l:String) {
    }
 }
 
-func translate(k:String) {
+func translate(k: String) {
    for (word, dictionary) in words {
     if k == word {
         for (language, value) in dictionary {
