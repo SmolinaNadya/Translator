@@ -8,14 +8,14 @@
 >swift build
 
 # Запуск проекта
-USAGE: swift run Translator <choice> [<word>] [--k <k>] [--l <l>] 
+USAGE: swift run Translator < choice > [< word >] [--k < k >] [--l < l >] 
  
 ARGUMENTS:
 
-  <choice> To search for words 
+  < choice >         To search for words 
 
 
-  <word>  The word you want to add or update in the dictionary 
+  < word >           The word you want to add or update in the dictionary 
 
 
 OPTIONS:
