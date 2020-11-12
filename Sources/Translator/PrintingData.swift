@@ -1,5 +1,5 @@
 class PrintingData: PrintingDataProtocol {
-    func printingData(Data: String) {
-        print(Data)
+    func printingData(data: String) {
+        print(data)
     }
 }

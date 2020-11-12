@@ -1,3 +1,3 @@
 protocol PrintingDataProtocol {
-    func printingData(Data: String) 
+    func printingData(data: String) 
 }
