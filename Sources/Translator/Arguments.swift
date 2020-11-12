@@ -1,5 +1,5 @@
 enum Arguments {
-    case search(k: String?, l: String?)
-    case update(word: String, k: String, l: String)
-    case delete(k: String?, l: String?)
+    case search(key: String?, language: String?)
+    case update(word: String, key: String, language: String)
+    case delete(key: String?, language: String?)
 }

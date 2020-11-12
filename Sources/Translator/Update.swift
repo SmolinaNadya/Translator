@@ -2,20 +2,20 @@ import Foundation
 class Update: UpdateProtocol {
     private let writer: WriterDataProtocol
     private let getterData: GetDataProtocol
-    var words: [String: [String: String]]
+    private var words: [String: [String: String]]
     init (getterData: GetDataProtocol, writer: WriterDataProtocol) { 
         self.getterData = getterData
         self.words = getterData.getData()
         self.writer = writer
     }
-    func update(newWord: String, k: String, l: String) {
-        var dictionary = words[k] ?? [:]
+    func update(newWord: String, key: String, language: String) {
+        var dictionary = words[key] ?? [:]
         if dictionary.isEmpty {
-            words[k] = [l : newWord]
+            words[key] = [language : newWord]
         }
         else {
-            dictionary[l] = newWord
-            words[k] = dictionary
+            dictionary[language] = newWord
+            words[key] = dictionary
         }
         writer.writingData(data: words)
     }

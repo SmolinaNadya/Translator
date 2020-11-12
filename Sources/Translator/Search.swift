@@ -1,73 +1,93 @@
 import Foundation
 class Search: SearchProtocol {
     private let getterData: GetDataProtocol
-    var answer = false
-    var words: [String: [String: String]]
+    private var lines = ""
+    private var words: [String: [String: String]]
     init (getterData: GetDataProtocol) {
         self.getterData = getterData
         self.words = getterData.getData()
     }
-    func search(k: String?, l: String?) {
-        if let newK: String = k {
-              if let newL: String = l {
-                translate(k: newK, l: newL)
-              }
-              else {
-                translate(k: newK)
-              }
-        }
-        else {
-            if let newL: String = l {
-                translate(l: newL)
+    func search(key: String?, language: String?) -> String {
+        if let newKey: String = key {
+            if let newLanguage: String = language {
+                lines = translate(key: newKey, language: newLanguage)
             }
             else {
-                translate()
+                lines = translate(key: newKey)
             }
         }
-        if answer == false {
-            print("Not found")
+        else {
+            if let newLanguage: String = language {
+                lines = translate(language: newLanguage)
+            }
+            else {
+                lines = translate()
+            }
         }
+        if lines == "" {
+            return "Not found"
+        }
+        return lines
     }
-    private func translate(k: String, l: String) {
+    private func translate(key: String, language: String) -> String {
+         var lines = ""
          for (word, dictionary) in words {
-             if k == word {
-                 for (language, value) in dictionary {
-                     if l == language {
-                         print(value) 
-                         answer = true
+             if key == word {
+                 for (existingLanguage, value) in dictionary {
+                     if language == existingLanguage {  
+                        lines = "\(value)"
                      }
                  }
              }
          }
+         return lines
     }
-    private func translate(k: String) {
+    private func translate(key: String) -> String {
+        var lines = ""
         for (word, dictionary) in words {
-            if k == word {
+            if key == word {
                 for (language, value) in dictionary {
-                    print("\(language):\(value)")
-                     answer = true
+                    if lines == "" {
+                        lines = "\(language):\(value)"
+                    }
+                    else {
+                        lines += "\n\(language):\(value)"
+                    }
                 }
             }
         }
+        return lines
     }
-    private func translate(l: String) {
+    private func translate(language: String) -> String {
+        var lines = ""
         for (word, dictionary) in words {
-            for (language, value) in dictionary {
-                if l == language {
-                    print("\(word) = \(value)") 
-                     answer = true
+            for (existingLanguage, value) in dictionary {
+                if language == existingLanguage {
+                    if lines == "" {
+                        lines =  "\(word) = \(value)"
+                    }
+                    else {
+                        lines +=  "\n\(word) = \(value)"
+                    }
                 }
             }
         }
+        return lines
     }         
-    private func translate() {
+    private func translate() -> String {
+        var lines = ""
         for (word, dictionary) in words {
             print(word)
             for (language, value) in dictionary {
-                print("\(language):\(value)")
-                answer = true
+                if lines == "" {
+                    lines = "\(language):\(value)"
+                }
+                else {
+                    lines += "\n\(language):\(value)"
+                }
             }
         }
+        return lines
     }
 }
         

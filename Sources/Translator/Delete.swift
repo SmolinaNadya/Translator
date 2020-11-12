@@ -2,46 +2,43 @@ import Foundation
 class Delete: DeleteProtocol {
     private let writer: WriterDataProtocol
     private let getterData: GetDataProtocol
-    var words: [String: [String: String]]
+    private var words: [String: [String: String]]
     init (getterData: GetDataProtocol, writer: WriterDataProtocol) { 
         self.getterData = getterData
         self.words = getterData.getData()
         self.writer = writer
     }
-    func delete(k: String?, l: String?) {
-        if let newK: String = k {
-              if let newL: String = l {
-                delete(k: newK, l: newL)
-              }
-              else {
-                  delete(k: newK)
-              }
+    func delete(key: String?, language: String?) {
+        if let newKey: String = key {
+            if let newLanguage: String = language {
+                delete(key: newKey, language: newLanguage)
             }
-              else {
-                  if let newL: String = l {
-                    delete(l: newL)
-                } 
-              }
-              writer.writingData(data: words)
-    }
-    func delete(k: String, l: String) {
-        var dictionary = words[k] ?? [:]
-        if dictionary.isEmpty {
-            return
+            else {
+                delete(key: newKey)
             }
-        else {
-            dictionary[l] = nil
-            words[k] = dictionary
         }
+        else {
+            if let newLanguage: String = language {
+                delete(language: newLanguage)
+            }
+        }
+        writer.writingData(data: words)  
     }
-    func delete(k: String) {
-         words[k] = nil
+    private func delete(key: String, language: String) {
+        guard var dictionary = words[key] else {
+            return
+        } 
+        dictionary[language] = nil
+        words[key] = dictionary
     }
-    func delete(l: String) {
+    private func delete(key: String) {
+        words[key] = nil
+    }
+    private func delete(language: String) {
         for (word, dictionary) in words {
             var dictionary = dictionary
-            dictionary[l] = nil
+            dictionary[language] = nil
             words[word] = dictionary
-            }
+        }
     }
 }

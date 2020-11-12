@@ -4,18 +4,18 @@ func main() {
     let container = Container()
     let parser = container.argumentParser
     guard let arguments = parser.toParse() else {
-        container.help.help()
+        container.printer.printingData(Data: container.help.help())
         return
     }
-    if case .search(let k, let l) = arguments {
-        container.search.search(k: k, l: l)
-    }
-    else if case .update(let word, let k, let l) = arguments {
-        container.update.update(newWord: word, k: k, l: l)
-    }
-    else if case .delete(let k, let l) = arguments {
-        container.delete.delete(k: k, l: l)
-    }
+    switch arguments {
+        case .search(let key, let language):
+        let lines = container.search.search(key: key, language: language)
+        container.printer.printingData(Data: lines)
+        case .update(let word, let key, let language):
+        container.update.update(newWord: word, key: key, language: language)
+        case .delete(let key, let language):
+        container.delete.delete(key: key, language: language)
+    }  
 }
 main()
 class Container {
@@ -39,5 +39,8 @@ class Container {
     }
     var help: HelpProtocol {
         return Help()
+    }
+    var printer: PrintingDataProtocol {
+        return PrintingData()
     }
 }

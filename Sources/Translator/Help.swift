@@ -1,5 +1,5 @@
 class Help: HelpProtocol {
-    func help() {
-        print(Commands.helpMessage())
+    func help() -> String {
+        return Commands.helpMessage()
     }
 }

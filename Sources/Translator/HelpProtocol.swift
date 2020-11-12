@@ -1,3 +1,3 @@
 protocol HelpProtocol {
-    func help()
+    func help() -> String
 }
