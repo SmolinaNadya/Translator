@@ -1,11 +1,13 @@
 import Foundation
 class Search: SearchProtocol {
     private let getterData: GetDataProtocol
+    private let outputData: OutputDataProtocol
     private var lines = ""
     private var words: [String: [String: String]]
-    init (getterData: GetDataProtocol) {
+    init (getterData: GetDataProtocol, outputData: OutputDataProtocol) {
         self.getterData = getterData
         self.words = getterData.getData()
+        self.outputData = outputData
     }
     func search(key: String?, language: String?) -> String {
         if let newKey: String = key {
@@ -13,15 +15,18 @@ class Search: SearchProtocol {
                 lines = translate(key: newKey, language: newLanguage)
             }
             else {
-                lines = translate(key: newKey)
+                let dictionary = translate(key: newKey)
+                lines = outputData.outputLanguageAndValue(dictionary: dictionary)
             }
         }
         else {
             if let newLanguage: String = language {
-                lines = translate(language: newLanguage)
+                let dictionary = translate(language: newLanguage)
+                lines = outputData.outputKeyAndValue(dictionary: dictionary)
             }
             else {
-                lines = translate()
+                let dictionary = translate()
+                lines = outputData.outputAllData(dictionary: dictionary)
             }
         }
         if lines == "" {
@@ -30,64 +35,36 @@ class Search: SearchProtocol {
         return lines
     }
     private func translate(key: String, language: String) -> String {
-         var lines = ""
          for (word, dictionary) in words {
              if key == word {
                  for (existingLanguage, value) in dictionary {
                      if language == existingLanguage {  
-                        lines = "\(value)"
+                        return value
                      }
                  }
              }
          }
-         return lines
+         return ""
     }
-    private func translate(key: String) -> String {
-        var lines = ""
-        for (word, dictionary) in words {
-            if key == word {
-                for (language, value) in dictionary {
-                    if lines == "" {
-                        lines = "\(language):\(value)"
-                    }
-                    else {
-                        lines += "\n\(language):\(value)"
-                    }
-                }
-            }
+   private func translate(key: String) -> [String:String] {
+        guard let dictionary = words[key] else {
+            return [:]
         }
-        return lines
+        return dictionary
     }
-    private func translate(language: String) -> String {
-        var lines = ""
+    private func translate(language: String) -> [String:String] {
+        var dictionaryWordAndValue: [String: String]  = [:]
         for (word, dictionary) in words {
             for (existingLanguage, value) in dictionary {
                 if language == existingLanguage {
-                    if lines == "" {
-                        lines =  "\(word) = \(value)"
-                    }
-                    else {
-                        lines +=  "\n\(word) = \(value)"
-                    }
+                    dictionaryWordAndValue[word] = value
                 }
             }
         }
-        return lines
+        return dictionaryWordAndValue
     }         
-    private func translate() -> String {
-        var lines = ""
-        for (word, dictionary) in words {
-            print(word)
-            for (language, value) in dictionary {
-                if lines == "" {
-                    lines = "\(language):\(value)"
-                }
-                else {
-                    lines += "\n\(language):\(value)"
-                }
-            }
-        }
-        return lines
+    private func translate() -> [String: [String: String]] {
+        return words
     }
 }
         
