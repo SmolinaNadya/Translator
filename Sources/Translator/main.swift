@@ -1,7 +1,5 @@
 import Foundation
 import ArgumentParser
-let container = Container()
-var words = container.getData.getData()
 func main() {
     let container = Container()
     let parser = container.argumentParser

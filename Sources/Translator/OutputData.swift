@@ -23,14 +23,14 @@ class OutputData: OutputDataProtocol {
         return lines
     }
     func outputAllData (dictionary: [String: [String: String]]) -> String {
-        for (word, dictionary) in words {
+        for (word, dictionaryLanguageAndValue) in dictionary {
             if lines == "" {
                 lines = word
             }
             else {
                 lines += "\n\(word)"
             }
-            for (language, value) in dictionary {
+            for (language, value) in dictionaryLanguageAndValue {
                     lines += "\n\(language):\(value)"
                 }
         }
