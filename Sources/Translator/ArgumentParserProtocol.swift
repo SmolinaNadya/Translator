@@ -1,4 +1,4 @@
 import Foundation
 protocol ArgumentParserProtocol {
-    func toParse() -> Arguments?
+    func toParse(_ arguments: [String]?) -> Arguments?
 }

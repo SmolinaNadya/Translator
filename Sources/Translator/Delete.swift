@@ -8,7 +8,7 @@ class Delete: DeleteProtocol {
         self.words = getterData.getData()
         self.writer = writer
     }
-    func delete(key: String?, language: String?) {
+    func delete(key: String?, language: String?) -> Result {
         if let newKey: String = key {
             if let newLanguage: String = language {
                 delete(key: newKey, language: newLanguage)
@@ -21,8 +21,12 @@ class Delete: DeleteProtocol {
             if let newLanguage: String = language {
                 delete(language: newLanguage)
             }
+            else {
+                return .errorNotArguments
+            }
         }
-        writer.writingData(data: words)  
+        writer.writingData(data: words) 
+        return .deleteSuccess 
     }
     private func delete(key: String, language: String) {
         guard var dictionary = words[key] else {

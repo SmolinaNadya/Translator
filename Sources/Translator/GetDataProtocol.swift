@@ -1,4 +1,4 @@
 import Foundation
-protocol GetDataProtocol {
+public protocol GetDataProtocol {
     func getData() -> [String: [String: String]]
 }

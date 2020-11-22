@@ -8,7 +8,7 @@ class Update: UpdateProtocol {
         self.words = getterData.getData()
         self.writer = writer
     }
-    func update(newWord: String, key: String, language: String) {
+    func update(newWord: String, key: String, language: String) -> Result {
         var dictionary = words[key] ?? [:]
         if dictionary.isEmpty {
             words[key] = [language : newWord]
@@ -18,5 +18,6 @@ class Update: UpdateProtocol {
             words[key] = dictionary
         }
         writer.writingData(data: words)
+        return .updateSuccess
     }
 }

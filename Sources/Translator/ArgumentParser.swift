@@ -1,9 +1,9 @@
 import Foundation
 import ArgumentParser
 class ArgumentParser: ArgumentParserProtocol {
-    func toParse() -> Arguments? {
+    func toParse(_ arguments:[String]?) -> Arguments? {
         do {
-            let command = try Commands.parseAsRoot()
+            let command = try Commands.parseAsRoot(arguments)
             switch command {
             case let command as Commands.Search:
               return .search(key: command.key, language: command.language)
