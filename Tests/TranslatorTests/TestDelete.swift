@@ -3,9 +3,7 @@ import XCTest
 class TestDelete: XCTestCase {
     private var delete: Delete!
     private var getterData: GetDataMock!
-    //private var words: [String: [String: String]] 
     private var writer: WriterDataMock!
-
     override func setUp() {
         super.setUp()
         getterData = GetDataMock()
@@ -32,7 +30,7 @@ class TestDelete: XCTestCase {
     }
     func testDeleteNoArguments() throws {
         let result = delete.delete(key: nil, language: nil)
-        XCTFail("Для удаления введите ключ -k и -l")
+        XCTAssertEqual(result, Result.errorNotArguments)
     }
 
     static var allTests = [

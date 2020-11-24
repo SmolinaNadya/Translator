@@ -1,6 +1,6 @@
-public class OutputData: OutputDataProtocol {
+class OutputData: OutputDataProtocol {
     private var lines = ""
-    public func outputLanguageAndValue(dictionary: [String:String]) -> String {
+    func outputLanguageAndValue(dictionary: [String:String]) -> String {
         for (language, value) in dictionary {
             if lines == "" {
                 lines = "\(language):\(value)"

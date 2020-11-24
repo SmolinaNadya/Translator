@@ -1,6 +1,6 @@
 import Foundation
-public class GetData: GetDataProtocol {
-    public func getData() -> [String: [String: String]] {
+class GetData: GetDataProtocol {
+    func getData() -> [String: [String: String]] {
         guard let path = Bundle.module.path( forResource: "data", ofType: "json")
         else {
             print("Путь не найден")

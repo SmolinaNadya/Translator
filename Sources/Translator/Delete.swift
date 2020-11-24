@@ -2,13 +2,13 @@ import Foundation
 class Delete: DeleteProtocol {
     private let writer: WriterDataProtocol
     private let getterData: GetDataProtocol
-    private var words: [String: [String: String]]
+    private var words: [String: [String: String]] = [:]
     init (getterData: GetDataProtocol, writer: WriterDataProtocol) { 
         self.getterData = getterData
-        self.words = getterData.getData()
         self.writer = writer
     }
     func delete(key: String?, language: String?) -> Result {
+        words = getterData.getData()
         if let newKey: String = key {
             if let newLanguage: String = language {
                 delete(key: newKey, language: newLanguage)

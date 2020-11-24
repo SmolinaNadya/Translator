@@ -3,13 +3,13 @@ class Search: SearchProtocol {
     private let getterData: GetDataProtocol
     private let outputData: OutputDataProtocol
     private var lines = ""
-    private var words: [String: [String: String]]
+    var words: [String: [String: String]] = [:]
     init (getterData: GetDataProtocol, outputData: OutputDataProtocol) {
         self.getterData = getterData
-        self.words = getterData.getData()
         self.outputData = outputData
     }
     func search(key: String?, language: String?) -> (result: Result, lines: String) {
+        words = getterData.getData()
         if let newKey: String = key {
             if let newLanguage: String = language {
                 lines = translate(key: newKey, language: newLanguage)

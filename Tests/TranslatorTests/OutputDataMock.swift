@@ -6,7 +6,7 @@ class OutputDataMock : OutputDataProtocol {
 
     func outputLanguageAndValue(dictionary: [String:String]) -> String {
         outputLanguageAndValueCallsCount += 1
-        outputLanguageAndValueParameters = dictionary
+        outputLanguageAndValueParameters = (dictionary)
         return outputLanguageAndValueResult
     }
     
@@ -16,7 +16,7 @@ class OutputDataMock : OutputDataProtocol {
 
     func outputKeyAndValue (dictionary: [String:String]) -> String {
         outputKeyAndValueCallsCount += 1
-        outputKeyAndValueParameters = dictionary
+        outputKeyAndValueParameters = (dictionary)
         return outputKeyAndValueResult
     }
     
@@ -26,7 +26,7 @@ class OutputDataMock : OutputDataProtocol {
     
     func outputAllData (dictionary: [String: [String: String]]) -> String {
         outputAllDataCallsCount += 1
-        outputAllDataParameters = dictionary
+        outputAllDataParameters = (dictionary)
         return outputAllDataResult
     }
 }

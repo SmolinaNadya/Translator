@@ -12,6 +12,8 @@ public func translator() -> Int {
         case .search(let key, let language):
           let lines = container.search.search(key: key, language: language).lines
           result = container.search.search(key: key, language: language).result
+          print(result)
+          print(lines)
           container.printer.printingData(data: lines)
         case .update(let word, let key, let language):
           result = container.update.update(newWord: word, key: key, language: language)

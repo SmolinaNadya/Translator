@@ -91,6 +91,21 @@ class TestArgumentParser: XCTestCase {
               XCTFail("Ошибка преобразования аргументов")
         }
     }
+    func testNotCorrectCommand() throws {
+        if argumentParser.toParse(["go"]) != nil {
+        XCTFail("Ошибка преобразования аргументов")
+      }
+    }
+    func testNotCommand() throws {
+      if argumentParser.toParse([""]) != nil {
+        XCTFail("Ошибка преобразования аргументов")
+      }
+    }
+    func testUpdateNotWord() throws {
+      if argumentParser.toParse(["update -k home -l ru"]) != nil {
+        XCTFail("Ошибка преобразования аргументов")
+      }
+    }
     static var allTests = [
         ("testSearchWithKey", testSearchWithKey),
         ("testSearchWithLanguage", testSearchWithLanguage),
@@ -99,6 +114,9 @@ class TestArgumentParser: XCTestCase {
         ("testDeleteKeyAndLanguage", testDeleteKeyAndLanguage),
         ("testDeleteWithKey", testDeleteWithKey),
         ("testDeleteWithLanguage", testDeleteWithLanguage),
-        ("testUpdate", testUpdate)
+        ("testUpdate", testUpdate),
+        ("testNotCorrectCommand", testNotCorrectCommand),
+        ("testNotCorrectCommand", testNotCorrectCommand),
+        ("testUpdateNotWord", testUpdateNotWord)
     ]
 }

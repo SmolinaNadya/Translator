@@ -17,6 +17,7 @@ function test() {
 
 test "search" 0
 test "search -k day" 0
+test "search -k home -l ru" 0
 test "search -l ru" 0
 test "update hi -k hello -l en" 0
 test "delete -k dia -l pt" 0
