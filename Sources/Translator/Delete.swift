@@ -2,7 +2,6 @@ import Foundation
 class Delete: DeleteProtocol {
     private let writer: WriterDataProtocol
     private let getterData: GetDataProtocol
-    //private var words: [String: [String: String]]
     init (getterData: GetDataProtocol, writer: WriterDataProtocol) { 
         self.getterData = getterData
         self.writer = writer

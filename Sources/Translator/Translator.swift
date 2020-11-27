@@ -4,11 +4,7 @@ public func translator() -> Int {
     let container = Container()
     let parser = container.argumentParser
     var result = Result.notFound
-    guard let arguments = parser.toParse(nil) else {
-        container.printer.printingData(data: container.help.help())
-        result = Result.errorArgumentParser
-        return 1
-    }
+    let arguments = parser.toParse(nil)
     switch arguments {
         case .search(let key, let language):
           let lines = container.search.search(key: key, language: language).lines
@@ -18,14 +14,24 @@ public func translator() -> Int {
           result = container.update.update(newWord: word, key: key, language: language)
         case .delete(let key, let language):
           result = container.delete.delete(key: key, language: language)
+        default:
+          container.printer.printingData(data: container.help.help())
+          result = Result.errorArgumentParser
     }  
-    if result == Result.notFound {
-        return 2
+    switch result {
+        case .errorArgumentParser:
+          return 1
+        case .notFound:
+          return 2
+        case .errorNotArguments:
+          return 3
+        case .searchSuccess:
+          return 0
+        case .deleteSuccess:
+          return 0
+        case .updateSuccess:
+          return 0
     }
-    if result == Result.errorNotArguments {
-        return 3
-    }
-    return 0
 }
 
 class Container {
