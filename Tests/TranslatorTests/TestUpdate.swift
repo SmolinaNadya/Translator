@@ -18,8 +18,13 @@ class TestUpdate: XCTestCase {
         super.tearDown()
     }
     func testUpdateWithAllKey() throws {
-        let result = update.update(newWord: "Night", key: "night", language: "en")
+        getterData.getDataResult = ["home":["en":"Home","ru":"Дом"]]
+        let result = update.update(newWord: "Домик", key: "home", language: "ru")
         XCTAssertEqual(result, Result.updateSuccess)
+        XCTAssertEqual(getterData.getDataCallsCount, 1)
+        XCTAssertEqual(writer.writingDataCallsCount, 1)
+        XCTAssertEqual(writer.writingDataParameters, ["home":["en":"Home","ru":"Домик"]])
+        //XCTAssertEqual(getterData.getData())
     }
     
     static var allTests = [

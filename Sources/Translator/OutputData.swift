@@ -11,7 +11,7 @@ class OutputData: OutputDataProtocol {
         }
         return lines
     }
-    public func outputKeyAndValue (dictionary: [String:String]) -> String {
+    func outputKeyAndValue (dictionary: [String:String]) -> String {
         for (key, value) in dictionary {
             if lines == "" {
                 lines = "\(key) = \(value)"
@@ -22,7 +22,7 @@ class OutputData: OutputDataProtocol {
         }
         return lines
     }
-    public func outputAllData (dictionary: [String: [String: String]]) -> String {
+    func outputAllData (dictionary: [String: [String: String]]) -> String {
         for (word, dictionaryLanguageAndValue) in dictionary {
             if lines == "" {
                 lines = word

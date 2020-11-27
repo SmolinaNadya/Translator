@@ -1,10 +1,11 @@
 import Foundation
-public enum Result {
+public enum Result : Error {
     case searchSuccess
     case updateSuccess
     case deleteSuccess
-    case getDataSuccess
     case notSuccess
+    case deleteError
+    case updateError
     case errorNotArguments
-    case errorGetData
+    case errorArgumentParser
 }

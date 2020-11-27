@@ -3,24 +3,23 @@ import ArgumentParser
 public func translator() -> Int {
     let container = Container()
     let parser = container.argumentParser
-    var result = Result.notSuccess
+    var result = Result.notFound
     guard let arguments = parser.toParse(nil) else {
         container.printer.printingData(data: container.help.help())
+        result = Result.errorArgumentParser
         return 1
     }
     switch arguments {
         case .search(let key, let language):
           let lines = container.search.search(key: key, language: language).lines
           result = container.search.search(key: key, language: language).result
-          print(result)
-          print(lines)
           container.printer.printingData(data: lines)
         case .update(let word, let key, let language):
           result = container.update.update(newWord: word, key: key, language: language)
         case .delete(let key, let language):
           result = container.delete.delete(key: key, language: language)
     }  
-    if result == Result.notSuccess {
+    if result == Result.notFound {
         return 2
     }
     if result == Result.errorNotArguments {
