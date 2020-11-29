@@ -1,23 +1,38 @@
 import Foundation
 import ArgumentParser
-func main() {
+public func translator() -> Int {
     let container = Container()
     let parser = container.argumentParser
-    guard let arguments = parser.toParse() else {
-        container.printer.printingData(data: container.help.help())
-        return
-    }
+    var result = Result.notFound
+    let arguments = parser.toParse(nil)
     switch arguments {
         case .search(let key, let language):
-          let lines = container.search.search(key: key, language: language)
+          let lines = container.search.search(key: key, language: language).lines
+          result = container.search.search(key: key, language: language).result
           container.printer.printingData(data: lines)
         case .update(let word, let key, let language):
-          container.update.update(newWord: word, key: key, language: language)
+          result = container.update.update(newWord: word, key: key, language: language)
         case .delete(let key, let language):
-          container.delete.delete(key: key, language: language)
+          result = container.delete.delete(key: key, language: language)
+        default:
+          container.printer.printingData(data: container.help.help())
+          result = Result.errorArgumentParser
     }  
+    switch result {
+        case .errorArgumentParser:
+          return 1
+        case .notFound:
+          return 2
+        case .errorNotArguments:
+          return 3
+        case .searchSuccess:
+          return 0
+        case .deleteSuccess:
+          return 0
+        case .updateSuccess:
+          return 0
+    }
 }
-main()
 
 class Container {
     var argumentParser: ArgumentParserProtocol {
