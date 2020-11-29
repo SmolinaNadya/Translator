@@ -32,3 +32,9 @@ test "search -l ru -k song" 2
 
 echo "Tests passed =" $passed 
 echo "Tests failed =" $failed
+
+if [ $failed -eq 0 ]; then
+  exit 0
+else
+  exit 1
+fi 

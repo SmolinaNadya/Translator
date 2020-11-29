@@ -13,5 +13,7 @@ switch result {
       default:
       print("Неизвестная ошибка")
 }
+      exit(Int32(result))
+
 
 
