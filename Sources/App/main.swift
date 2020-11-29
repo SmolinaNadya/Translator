@@ -10,8 +10,10 @@ switch result {
       print("Не удалось выполнить команду")
     case 3:
       print("Ошибка в количестве аргументов")
-      default:
+    default:
       print("Неизвестная ошибка")
 }
+exit(Int32(result))
+
 
 

@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: installationSwift
-        uses: fval/setup-swift@v1
+        uses: fwal/setup-swift@v1
         with:
           swift-version: "5.3.0"
   

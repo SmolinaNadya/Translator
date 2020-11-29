@@ -24,7 +24,6 @@ class TestUpdate: XCTestCase {
         XCTAssertEqual(getterData.getDataCallsCount, 1)
         XCTAssertEqual(writer.writingDataCallsCount, 1)
         XCTAssertEqual(writer.writingDataParameters, ["home":["en":"Home","ru":"Домик"]])
-        //XCTAssertEqual(getterData.getData())
     }
     
     static var allTests = [
