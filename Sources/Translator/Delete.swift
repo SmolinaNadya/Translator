@@ -2,11 +2,13 @@ import Foundation
 class Delete: DeleteProtocol {
     private let writer: WriterDataProtocol
     private let getterData: GetDataProtocol
-    init (getterData: GetDataProtocol, writer: WriterDataProtocol) { 
+    private let search: SearchProtocol
+    init (getterData: GetDataProtocol, writer: WriterDataProtocol, search: SearchProtocol) { 
         self.getterData = getterData
         self.writer = writer
+        self.search = search
     }
-    func delete(key: String?, language: String?) -> Result {
+    func delete(key: String?, language: String?) -> Result<String, AppErrors> {
         var words = getterData.getData()
         if let newKey: String = key {
             if let newLanguage: String = language {
@@ -21,11 +23,18 @@ class Delete: DeleteProtocol {
                words = delete(language: newLanguage, words: words)
             }
             else {
-                return .errorNotArguments
+                return .failure(.errorNotArguments)
             }
         }
         writer.writingData(data: words) 
-        return .deleteSuccess 
+        words = getterData.getData()
+        let deletingWord = search.search(key: key, language: language)
+        switch deletingWord {
+            case .success(_):
+              return .failure(.deleteError)
+            case .failure(_):
+              return .success("Данные успешно удалены")
+        }
     }
     private func delete(key: String, language: String, words: [String: [String: String]]) -> [String: [String: String]] {
         var words = words

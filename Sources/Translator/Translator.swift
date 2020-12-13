@@ -3,38 +3,52 @@ import ArgumentParser
 public func translator() -> Int {
     let container = Container()
     let parser = container.argumentParser
-    var result = Result.notFound
     let arguments = parser.toParse(nil)
     switch arguments {
         case .search(let key, let language):
-          let lines = container.search.search(key: key, language: language).lines
-          result = container.search.search(key: key, language: language).result
-          container.printer.printingData(data: lines)
+          let lines = container.search.search(key: key, language: language)
+          switch lines {
+            case .success(let value):
+              container.printer.printingData(data: value)
+              return 0
+            case .failure(_):
+              return 1   
+           }
         case .update(let word, let key, let language):
-          result = container.update.update(newWord: word, key: key, language: language)
+          let answer = container.update.update(newWord: word, key: key, language: language)
+          switch answer {
+            case .success(let value):
+              container.printer.printingData(data: value)
+              return 0
+            case .failure(_):
+              return 2
+          }
         case .delete(let key, let language):
-          result = container.delete.delete(key: key, language: language)
+          let answer = container.delete.delete(key: key, language: language)
+          switch answer {
+            case .success(let value):
+              container.printer.printingData(data: value)
+              return 0
+            case .failure(let error):
+              switch error {
+                case .errorNotArguments:
+                  return 3
+                case .deleteError:
+                  return 4
+                default:
+                  return 6
+             }
+          }
         default:
           container.printer.printingData(data: container.help.help())
-          result = Result.errorArgumentParser
+          return 5
     }  
-    switch result {
-        case .errorArgumentParser:
-          return 1
-        case .notFound:
-          return 2
-        case .errorNotArguments:
-          return 3
-        case .searchSuccess:
-          return 0
-        case .deleteSuccess:
-          return 0
-        case .updateSuccess:
-          return 0
-    }
 }
 
-class Container {
+public class Container {
+   public init() {
+
+    }
     var argumentParser: ArgumentParserProtocol {
         return ArgumentParser()
     }
@@ -47,14 +61,14 @@ class Container {
      var outputData: OutputDataProtocol {
         return OutputData()
     }
-    var search: SearchProtocol {
+    public var search: SearchProtocol {
         return Search(getterData: getData, outputData: outputData)
     }
-    var update: UpdateProtocol {
-        return Update(getterData: getData, writer: writer)
+    public var update: UpdateProtocol {
+        return Update(getterData: getData, writer: writer,search: search)
     }
-    var delete: DeleteProtocol {
-        return Delete(getterData: getData, writer: writer)
+    public var delete: DeleteProtocol {
+        return Delete(getterData: getData, writer: writer, search: search)
     }
     var help: HelpProtocol {
         return Help()

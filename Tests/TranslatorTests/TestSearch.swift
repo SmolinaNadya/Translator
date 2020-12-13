@@ -19,17 +19,23 @@ final class TestSearch: XCTestCase {
     func testSearchKeyAndLanguage() throws {
         getterData.getDataResult = ["home":["en":"Home","ru":"Дом"]]
         let found = search.search(key: "home", language: "ru")
-        XCTAssertEqual(found.result, Result.searchSuccess)
-        XCTAssertEqual(found.lines,"Дом")
+        guard case Result.success(let value) = found else {
+            XCTFail("Ошибка поиска")
+            return
+        }
+        XCTAssertEqual(value, "Дом")
         XCTAssertEqual(getterData.getDataCallsCount, 1)
     }
     func testSearchKey() throws {
         getterData.getDataResult = ["day":["en":"Day","ru":"День"]]
         output.outputLanguageAndValueResult = "en:Day\nru:День"
         let found = search.search(key: "day", language: nil)
+        guard case Result.success(let value) = found else {
+            XCTFail("Ошибка поиска")
+            return
+        }
         XCTAssertEqual(getterData.getDataCallsCount, 1)
-        XCTAssertEqual(found.result, Result.searchSuccess)
-        XCTAssertEqual(found.lines, "en:Day\nru:День")
+        XCTAssertEqual(value, "en:Day\nru:День")
         XCTAssertEqual(output.outputLanguageAndValueCallsCount, 1)
         XCTAssertEqual(output.outputLanguageAndValueParameters, ["en":"Day","ru":"День"])
     }
@@ -37,8 +43,11 @@ final class TestSearch: XCTestCase {
         getterData.getDataResult = ["home":["en":"Home","ru":"Дом"]]
         output.outputKeyAndValueResult = "en = Home"
         let found = search.search(key: nil, language: "en")
-        XCTAssertEqual(found.result, Result.searchSuccess)
-        XCTAssertEqual(found.lines, "en = Home")
+        guard case Result.success(let value) = found else {
+            XCTFail("Ошибка поиска")
+            return
+        }
+        XCTAssertEqual(value, "en = Home")
         XCTAssertEqual(getterData.getDataCallsCount, 1)
         XCTAssertEqual(output.outputKeyAndValueCallsCount, 1)
         XCTAssertEqual(output.outputKeyAndValueParameters, ["home":"Home"])
@@ -47,8 +56,11 @@ final class TestSearch: XCTestCase {
         getterData.getDataResult = ["home":["en":"Home","ru":"Дом"]]
         output.outputAllDataResult = "home\nen:Home\nru:Дом"
         let found = search.search(key: nil, language: nil)
-        XCTAssertEqual(found.result, Result.searchSuccess)
-        XCTAssertEqual(found.lines, "home\nen:Home\nru:Дом")
+        guard case Result.success(let value) = found else {
+            XCTFail("Ошибка поиска")
+            return
+        }
+        XCTAssertEqual(value, "home\nen:Home\nru:Дом")
         XCTAssertEqual(getterData.getDataCallsCount, 1)
         XCTAssertEqual(output.outputAllDataCallsCount, 1)
         XCTAssertEqual(output.outputAllDataParameters, ["home":["en":"Home","ru":"Дом"]])

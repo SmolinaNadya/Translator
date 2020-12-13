@@ -7,7 +7,7 @@ class Search: SearchProtocol {
         self.getterData = getterData
         self.outputData = outputData
     }
-    func search(key: String?, language: String?) -> (result: Result, lines: String) {
+    func search(key: String?, language: String?) -> Result<String, AppErrors> {
         let words = getterData.getData()
         if let newKey: String = key {
             if let newLanguage: String = language {
@@ -29,9 +29,9 @@ class Search: SearchProtocol {
             }
         }
         if lines == "" {
-            return (.notFound, "Not found")
+            return .failure(.notFound)
         }
-        return (.searchSuccess, lines)
+        return .success(lines)
     }
     private func translate(key: String, language: String, words: [String: [String: String]]) -> String {
          for (word, dictionary) in words {

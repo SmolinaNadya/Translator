@@ -1,3 +1,3 @@
-protocol SearchProtocol {
-    func search(key: String?, language: String?) -> (result: Result, lines: String)
+public protocol SearchProtocol {
+    func search(key: String?, language: String?) -> Result<String, AppErrors> 
 }
