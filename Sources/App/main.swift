@@ -5,13 +5,19 @@ switch result {
     case 0:
       exit(Int32(result))
     case 1:
-      print("Неправильная команда")
+      print("Не удалось найти")
     case 2:
-      print("Не удалось выполнить команду")
+      print("Не удалось обновить")
     case 3:
       print("Ошибка в количестве аргументов")
-      default:
+    case 4:
+      print("Не удалось удалить")
+    case 5:
+      print("Не правильная команда")
+    default:
       print("Неизвестная ошибка")
 }
+exit(Int32(result))
+
 
 

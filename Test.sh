@@ -17,18 +17,24 @@ function test() {
 
 test "search" 0
 test "search -k day" 0
-test "search -k home -l ru" 0
+test "search -k day -l ru" 0
 test "search -l ru" 0
 test "update hi -k hello -l en" 0
 test "delete -k dia -l pt" 0
 test "delete -l en -k hello" 0
 test "delete" 3
 test "search -l ru -k day" 0
-test "update" 1
-test "update -l ru" 1
-test "update -k night" 1
-test "update Привет" 1
-test "search -l ru -k song" 2
+test "update" 5
+test "update -l ru" 5
+test "update -k night" 5
+test "update Привет" 5
+test "search -l ru -k song" 1
 
 echo "Tests passed =" $passed 
 echo "Tests failed =" $failed
+
+if [ $failed -eq 0 ]; then
+  exit 0
+else
+  exit 1
+fi 
